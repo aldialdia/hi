@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Aal 🌸</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       ROOT & RESET
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #dce8f0;
+      --bg2:       #c8d9e8;
+      --card:      rgba(255,255,255,0.62);
+      --border:    rgba(255,255,255,0.80);
+      --sky:       #b3ccdc;
+      --sky-dark:  #7aaac4;
+      --sky-deep:  #4d8aaa;
+      --text:      #2c4a5a;
+      --text-soft: #6a8fa8;
+      --cream:     #f5efe8;
+      --gold:      #d4a84b;
+      --pink:      #c9a0b4;
+      --shadow:    rgba(60,100,130,0.18);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(160deg, #e8f0f7 0%, #b3ccdc 50%, #d0e2ef 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+
+    /* ============================================================
+       FLOATING PETALS (background)
+    ============================================================ */
+    #petals {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      font-size: 18px;
+      opacity: 0;
+      animation: petalFall linear infinite;
+      user-select: none;
+    }
+    @keyframes petalFall {
+      0%   { transform: translateY(-40px) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.5; }
+      90%  { opacity: 0.25; }
+      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ============================================================
+       STAGE (scene container)
+    ============================================================ */
+    .stage {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.8s ease;
+      z-index: 2;
+    }
+    .stage.out { opacity: 0; pointer-events: none; }
+    .stage.gone { display: none; }
+
+
+
+    /* small label above content */
+    .eyebrow {
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--text-soft); font-weight: 400;
+      margin-top: 28px;
+    }
+
+    /* ============================================================
+       SCENE 1 — CAKE
+    ============================================================ */
+    #stage1 { z-index: 4; }
+
+    .cake-area {
+      position: relative;
+      display: flex; flex-direction: column; align-items: center;
+      cursor: pointer; user-select: none;
+    }
+
+    /* The flame SVG on top */
+    .flame-wrap {
+      position: absolute;
+      top: -36px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .flame {
+      width: 22px; height: 34px;
+      background: radial-gradient(ellipse at 50% 80%, #fff4a0 0%, #ffd060 40%, #ff8c00 75%, transparent 100%);
+      border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%;
+      animation: flicker 0.6s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 10px rgba(255,180,40,0.8));
+      transform-origin: bottom center;
+    }
+    @keyframes flicker {
+      from { transform: scaleX(1) scaleY(1) rotate(-3deg); filter: drop-shadow(0 0 8px rgba(255,180,40,0.7)); }
+      to   { transform: scaleX(0.88) scaleY(1.08) rotate(3deg); filter: drop-shadow(0 0 14px rgba(255,180,40,1)); }
+    }
+    .flame.blow-out {
+      animation: blowOut 0.7s ease-out forwards;
+    }
+    @keyframes blowOut {
+      0%   { transform: scaleX(1) scaleY(1); opacity: 1; }
+      30%  { transform: scaleX(2.5) scaleY(0.3) translateX(8px); opacity: 0.7; }
+      60%  { transform: scaleX(3) scaleY(0.1) translateX(14px); opacity: 0.3; }
+      100% { transform: scaleX(3) scaleY(0) translateX(14px); opacity: 0; }
+    }
+    .smoke {
+      width: 3px; height: 0; background: transparent;
+      border-radius: 2px; opacity: 0;
+      transform-origin: bottom center;
+    }
+    .smoke.rise {
+      animation: smokeRise 2s ease-out forwards;
+      background: linear-gradient(to top, rgba(150,150,150,0.5), transparent);
+    }
+    @keyframes smokeRise {
+      0%   { height: 0; opacity: 0.6; transform: scaleX(1) translateY(0); }
+      50%  { height: 40px; opacity: 0.4; transform: scaleX(2) translateY(-10px); }
+      100% { height: 60px; opacity: 0; transform: scaleX(3) translateY(-20px); }
+    }
+
+    .cake-emoji {
+      font-size: 110px; line-height: 1;
+      filter: drop-shadow(0 8px 20px rgba(100,140,170,0.3));
+      transition: transform 0.3s;
+    }
+    .cake-area:active .cake-emoji { transform: scale(0.93); }
+
+
+
+    /* ============================================================
+       SCENE 2 — GIFT BOX
+    ============================================================ */
+    #stage2 { z-index: 3; }
+
+    .gift-area {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px;
+      cursor: pointer; user-select: none;
+    }
+
+    .gift-emoji {
+      font-size: 100px; line-height: 1;
+      display: block;
+      animation: giftWiggle 2.2s ease-in-out infinite;
+      filter: drop-shadow(0 8px 20px rgba(100,140,170,0.3));
+      transform-origin: bottom center;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+    @keyframes giftWiggle {
+      0%,100% { transform: rotate(-12deg) scale(1); }
+      25%      { transform: rotate(0deg) scale(1.05); }
+      50%      { transform: rotate(12deg) scale(1); }
+      75%      { transform: rotate(0deg) scale(1.05); }
+    }
+    .gift-emoji.pressed {
+      animation: none;
+      transform: rotate(0deg) scale(0.85) translateY(120px);
+      opacity: 0;
+    }
+
+
+
+    /* Balloons */
+    #balloon-layer {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 10; overflow: hidden;
+    }
+    .balloon-item {
+      position: absolute;
+      bottom: -80px;
+      font-size: 56px;
+      opacity: 0;
+      transform: translateY(0) rotate(0deg);
+      transition: none;
+    }
+    .balloon-item.fly {
+      transition: transform 5s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.8s;
+      transform: translateY(-115vh) rotate(var(--r, 5deg));
+      opacity: 1;
+    }
+
+    /* Photos */
+    #photo-layer {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 9; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .photo-item {
+      position: absolute;
+      bottom: -220px;
+      width: 160px; height: 160px;
+      object-fit: cover;
+      border: 7px solid white;
+      border-bottom: 30px solid white;
+      border-radius: 3px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+      opacity: 0;
+      transform: translateY(0) rotate(var(--r,0deg));
+      transition: none;
+    }
+    .photo-item.fly {
+      transition: transform 4.5s cubic-bezier(0.2, 0.8, 0.4, 1), opacity 0.8s;
+      transform: translateY(-140vh) rotate(var(--r, 0deg));
+      opacity: 1;
+    }
+
+    /* ============================================================
+       SCENE 3 — FOLDED LETTER
+    ============================================================ */
+    #stage3 { z-index: 3; }
+
+    .letter-scene {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 14px;
+    }
+
+    /* === BOOK WRAP === */
+    .book-wrap {
+      position: relative;
+      width: min(280px, 82vw);
+      height: min(360px, 68vh);
+      cursor: pointer; user-select: none;
+      /* expands to show 2 pages when opened */
+      transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.5s,
+                  height 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+    }
+    .book-wrap.opened {
+      width: min(640px, 95vw);
+      height: min(360px, 68vh);
+      cursor: default;
+    }
+
+    /* === COVER (shown when closed) === */
+    .book-cover {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #e8f3fa 0%, #c8dcea 100%);
+      border: 1.5px solid rgba(255,255,255,0.85);
+      border-radius: 6px 18px 18px 6px;
+      box-shadow: 6px 8px 28px rgba(60,100,130,0.28);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
+      overflow: hidden;
+      /* spine shadow */
+      transform-origin: left center;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.35s ease 0.4s;
+      z-index: 3;
+    }
+    .book-cover::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 14px;
+      background: linear-gradient(90deg, rgba(80,130,170,0.25), transparent);
+      border-right: 1px solid rgba(179,204,220,0.6);
+    }
+    .book-cover::after {
+      content: '';
+      position: absolute; inset: 10px;
+      border: 1px dashed rgba(179,204,220,0.6);
+      border-radius: 3px 14px 14px 3px;
+      pointer-events: none;
+    }
+    .book-wrap.opened .book-cover {
+      transform: rotateY(-80deg) translateX(-40%);
+      opacity: 0;
+    }
+    .cover-flower {
+      font-size: 32px;
+      animation: coverSway 3s ease-in-out infinite alternate;
+    }
+    @keyframes coverSway { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
+    .cover-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 20px;
+      color: var(--sky-deep); text-align: center; line-height: 1.4;
+    }
+
+    /* === SPREAD (2 pages, hidden until opened) === */
+    .book-spread {
+      position: absolute; inset: 0;
+      display: flex;
+      opacity: 0;
+      transition: opacity 0.5s ease 0.9s;
+      border-radius: 6px 18px 18px 6px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(60,100,130,0.22);
+    }
+    .book-wrap.opened .book-spread { opacity: 1; }
+
+    /* spine between pages */
+    .book-spread::before {
+      content: '';
+      position: absolute; left: 50%; top: 0; bottom: 0;
+      width: 3px; transform: translateX(-50%);
+      background: linear-gradient(to bottom,
+        rgba(100,150,180,0.15),
+        rgba(100,150,180,0.35) 30%,
+        rgba(100,150,180,0.35) 70%,
+        rgba(100,150,180,0.15));
+      z-index: 2;
+    }
+
+    /* left page */
+    .spread-left {
+      flex: 1;
+      background: linear-gradient(160deg, #fffdf9, #f5ede3);
+      border-right: 1px solid rgba(179,204,220,0.3);
+      padding: 22px 18px 22px 22px;
+      display: flex; flex-direction: column; gap: 10px;
+      overflow: auto;
+    }
+    .spread-left .inner-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px; font-style: italic;
+      color: var(--sky-deep);
+      border-bottom: 1px solid rgba(100,143,168,0.25);
+      padding-bottom: 7px; margin-bottom: 2px; text-align: center;
+    }
+    .spread-left .inner-line {
+      font-size: 12px; color: var(--text); line-height: 1.85;
+    }
+    .spread-left .inner-flower {
+      font-size: 13px; letter-spacing: 3px; text-align: center;
+      color: var(--sky-dark); margin-top: auto; padding-top: 6px;
+    }
+
+    /* right page */
+    .spread-right {
+      flex: 1;
+      background: linear-gradient(160deg, #fffdf9, #f0ebe0);
+      padding: 22px 22px 22px 18px;
+      display: flex; flex-direction: column; gap: 10px;
+      overflow: auto;
+    }
+    .spread-right .doa-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 13px;
+      color: var(--gold); text-align: center;
+      border-bottom: 1px solid rgba(212,168,75,0.3);
+      padding-bottom: 7px; margin-bottom: 2px;
+    }
+    .spread-right .doa-line {
+      font-size: 12px; color: var(--text);
+      line-height: 1.85; letter-spacing: 0.1px;
+    }
+    .spread-right .doa-sig {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 11.5px;
+      color: var(--text-soft); text-align: right;
+      margin-top: auto; padding-top: 8px;
+      border-top: 1px solid rgba(100,143,168,0.2);
+    }
+
+
+
+    /* Fade-in utility */
+    .fade-in { animation: fadeIn 0.9s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; } }
+
+    /* ============================================================
+       CONFETTI CANVAS
+    ============================================================ */
+    #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 999; }
+  </style>
+</head>
+<body>
+
+<!-- background petals -->
+<div id="petals"></div>
+<!-- confetti -->
+<canvas id="confetti"></canvas>
+<!-- balloons (global layer) -->
+<div id="balloon-layer"></div>
+<!-- photos (global layer) -->
+<div id="photo-layer"></div>
+
+<!-- ====================================================
+     STAGE 1 — CAKE
+==================================================== -->
+<div id="stage1" class="stage">
+  <div class="cake-area" id="cakeBtn">
+    <div class="flame-wrap">
+      <div class="smoke" id="smoke"></div>
+      <div class="flame" id="flame"></div>
+    </div>
+    <div class="cake-emoji">🎂</div>
+  </div>
+  <p class="eyebrow">✨ untuk seseorang yang spesial 🌸</p>
+</div>
+
+<!-- ====================================================
+     STAGE 2 — GIFT BOX
+==================================================== -->
+<div id="stage2" class="stage gone" style="opacity:0;">
+  <div class="gift-area" id="giftBtn">
+    <span class="gift-emoji" id="giftEmoji">🎁</span>
+  </div>
+  <p class="eyebrow">ada sesuatu untukmu 🎀</p>
+</div>
+
+<!-- ====================================================
+     STAGE 3 — FOLDED LETTER
+==================================================== -->
+<div id="stage3" class="stage gone" style="opacity:0;">
+  <div class="letter-scene">
+    <div class="book-wrap fade-in" id="bookWrap">
+
+      <!-- COVER (visible when closed) -->
+      <div class="book-cover" id="bookCover">
+        <span class="cover-flower">✉️</span>
+        <p class="cover-text">pesan<br>untukmu</p>
+      </div>
+
+      <!-- SPREAD (2 pages, revealed when opened) -->
+      <div class="book-spread" id="bookSpread">
+        <!-- Left page -->
+        <div class="spread-left">
+          <p class="inner-title">Doa &amp; Harapan Untukmu 🌿</p>
+          <p class="inner-line">
+            Semoga di usiamu yang bertambah ini,<br>
+            hatimu semakin lapang dan tenang,<br>
+            langkahmu semakin ringan dan terarah.
+          </p>
+          <p class="inner-line">
+            Semoga Allah senantiasa melimpahkan<br>
+            keberkahan, kemudahan, dan kebahagiaan<br>
+            di setiap hari-harimu. Barakallahu fii umrik. ✨
+          </p>
+          <p class="inner-line">
+            Semoga kamu selalu dikelilingi oleh<br>
+            orang-orang yang menyayangimu dengan tulus,<br>
+            dan semua impianmu dikabulkan satu per satu.
+          </p>
+          
+        </div>
+        <!-- Right page -->
+        <div class="spread-right">
+          <p class="doa-title">✦ dengan tulus ✦</p>
+          <p class="doa-line">
+            Terima kasih sudah bertahan<br>
+            dan sudah menjadi<br>
+            dirimu yang luar biasa ini. 🌿
+          </p>
+          <p class="doa-line">
+            Selamat ulang tahun, Alaaa. Semoga tahun ini<br>
+            membawa banyak hal indah yang belum pernah<br>
+            kamu bayangkan sebelumnya.
+          </p>
+          <p class="doa-sig">— dengan tulus &amp; hangat 🌿</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="eyebrow fade-in">ada satu lagi untukmu ✨</p>
+  </div>
+</div>
+
+
+<!-- ====================================================
+     SCRIPT
+==================================================== -->
+<script>
+  /* ── PETALS ── */
+  const petalEl = document.getElementById('petals');
+  ['🌸','🌿','✨','🌺','⭐','❄️'].forEach((ch, ci) => {
+    for (let i = 0; i < 5; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal'; p.textContent = ch;
+      p.style.left = Math.random() * 100 + '%';
+      p.style.animationDuration = (9 + Math.random() * 12) + 's';
+      p.style.animationDelay = (Math.random() * 14) + 's';
+      p.style.fontSize = (14 + Math.random() * 10) + 'px';
+      petalEl.appendChild(p);
+    }
+  });
+
+  /* ── CONFETTI ── */
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  let W = canvas.width = innerWidth, H = canvas.height = innerHeight;
+  window.addEventListener('resize', () => { W = canvas.width = innerWidth; H = canvas.height = innerHeight; });
+  const CCOLS = ['#b3ccdc','#c9a0b4','#d4a84b','#9bb8d0','#eef5fa','#fff','#7aaac4'];
+  let pieces = [], confettiOn = false, confettiRAF;
+
+  function boom(n=180) {
+    confettiOn = true;
+    pieces = [];
+    for (let i=0; i<n; i++) {
+      pieces.push({
+        x: Math.random()*W, y: -10,
+        vx: (Math.random()-0.5)*4,
+        vy: Math.random()*5+2,
+        r: Math.random()*7+3,
+        c: CCOLS[i%CCOLS.length],
+        a: 0, va: 0.08+Math.random()*0.08,
+        s: Math.random()>0.5
+      });
+    }
+    if (!confettiRAF) drawConfetti();
+    setTimeout(()=>confettiOn=false, 5000);
+  }
+  function drawConfetti() {
+    ctx.clearRect(0,0,W,H);
+    pieces.forEach(p => {
+      ctx.save(); ctx.beginPath(); ctx.fillStyle = p.c;
+      if (p.s) { ctx.translate(p.x,p.y); ctx.rotate(p.a); ctx.fillRect(-p.r,-p.r*.5,p.r*2,p.r); }
+      else       { ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); }
+      ctx.restore();
+      p.x+=p.vx; p.y+=p.vy; p.a+=p.va;
+      p.vx += (Math.random()-0.5)*0.1;
+      if (p.y>H) { p.y=-10; p.x=Math.random()*W; }
+    });
+    if (confettiOn || pieces.some(p=>p.y<H)) confettiRAF = requestAnimationFrame(drawConfetti);
+    else { ctx.clearRect(0,0,W,H); confettiRAF=null; }
+  }
+
+  /* ── SCENE HELPERS ── */
+  function switchTo(fromId, toId, delay=0) {
+    const from = document.getElementById(fromId);
+    const to   = document.getElementById(toId);
+    setTimeout(() => {
+      from.classList.add('out');
+      setTimeout(() => {
+        from.classList.add('gone');
+        to.classList.remove('gone');
+        setTimeout(() => { to.style.opacity = '1'; }, 30);
+      }, 850);
+    }, delay);
+  }
+
+  /* ============================================================
+     STAGE 1 — CAKE LOGIC
+  ============================================================ */
+  const cakeBtn  = document.getElementById('cakeBtn');
+  const flame    = document.getElementById('flame');
+  const smoke    = document.getElementById('smoke');
+  let cakeTapped = false;
+
+  cakeBtn.addEventListener('click', () => {
+    if (cakeTapped) return;
+    cakeTapped = true;
+
+    // brief delay then blow candle
+    setTimeout(() => {
+      flame.classList.add('blow-out');
+      setTimeout(() => {
+        smoke.classList.add('rise');
+      }, 200);
+    }, 400);
+
+    // boom + transition to gift scene
+    setTimeout(() => {
+      boom();
+    }, 700);
+
+    setTimeout(() => {
+      switchTo('stage1', 'stage2');
+    }, 2400);
+  });
+
+  /* ============================================================
+     STAGE 2 — GIFT + BALLOONS + PHOTOS
+  ============================================================ */
+  const giftBtn   = document.getElementById('giftBtn');
+  const giftEmoji = document.getElementById('giftEmoji');
+  const balloonLayer = document.getElementById('balloon-layer');
+  const photoLayer   = document.getElementById('photo-layer');
+  let giftTapped = false;
+
+  const BALLOON_EMOJIS = ['🎈','🎈','🎈','🎀','✨','🎊','🎈','🎈','🎈','🎉'];
+  const PHOTOS = ['foto1.jfif','foto2.jfif','foto3.jfif','foto4.jfif','foto5.jfif','foto6.jfif'];
+
+  giftBtn.addEventListener('click', () => {
+    if (giftTapped) return;
+    giftTapped = true;
+
+    // gift slides down
+    giftEmoji.classList.add('pressed');
+
+    // hide the eyebrow label
+    const stage2Eyebrow = document.querySelector('#stage2 .eyebrow');
+    if (stage2Eyebrow) { stage2Eyebrow.style.transition = 'opacity 0.4s'; stage2Eyebrow.style.opacity = '0'; }
+
+    // after gift disappears → balloons
+    setTimeout(() => {
+      BALLOON_EMOJIS.forEach((em, i) => {
+        const b = document.createElement('div');
+        b.className = 'balloon-item';
+        const posX = 5 + Math.random()*90;
+        const rot  = (Math.random()-0.5)*30;
+        b.style.left  = posX + '%';
+        b.style.setProperty('--r', rot+'deg');
+        b.style.fontSize = (44 + Math.random()*24) + 'px';
+        b.textContent = em;
+        balloonLayer.appendChild(b);
+        setTimeout(() => b.classList.add('fly'), 50 + i*120);
+        setTimeout(() => b.remove(), 6500 + i*120);
+      });
+    }, 500);
+
+    // after balloons → photos fly up one by one
+    let photosDone = 0;
+    PHOTOS.forEach((src, i) => {
+      setTimeout(() => {
+        const img = document.createElement('img');
+        img.className = 'photo-item';
+        img.src = src;
+        img.alt = 'kenangan ' + (i+1);
+        const posX  = 8 + Math.random()*76;
+        const rot   = (Math.random()-0.5)*28;
+        img.style.left = posX + '%';
+        img.style.setProperty('--r', rot+'deg');
+        photoLayer.appendChild(img);
+        setTimeout(() => {
+          img.classList.add('fly');
+          photosDone++;
+          if (photosDone === PHOTOS.length) {
+            // all photos launched → 2s later show letter
+            setTimeout(() => {
+              boom(100);
+              // clear layers
+              setTimeout(() => {
+                [...balloonLayer.children].forEach(b=>b.remove());
+                [...photoLayer.children].forEach(p=>p.remove());
+              }, 4500);
+              switchTo('stage2', 'stage3');
+            }, 2000);
+          }
+        }, 60);
+        setTimeout(() => img.remove(), 6000);
+      }, 1000 + i*600);
+    });
+  });
+
+  /* ============================================================
+     STAGE 3 — LETTER
+  ============================================================ */
+  const bookWrap  = document.getElementById('bookWrap');
+  let letterOpened = false;
+
+  bookWrap.addEventListener('click', () => {
+    if (letterOpened) return;
+    letterOpened = true;
+    bookWrap.classList.add('opened');
+    boom(80);
+  });
+</script>
+</body>
+</html>
